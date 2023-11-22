@@ -1,8 +1,5 @@
-// main.dart
 import 'package:flutter/material.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
-// import 'package:fluttertoast/fluttertoast.dart';
-// import 'package:toast/toast.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,6 +19,17 @@ class Task {
   late String description;
 
   Task({required this.title, required this.description});
+
+  TaskDetails toTaskDetails() {
+    return TaskDetails(title: title, description: description);
+  }
+}
+
+class TaskDetails {
+  String title;
+  String description;
+
+  TaskDetails({required this.title, required this.description});
 }
 
 class MyApp extends StatelessWidget {
@@ -73,8 +81,6 @@ class _TodoListState extends State<TodoList> {
     if (apiResponse.success) {
       _loadTasks();
       _showSnackBar("Task Added Successfully");
-      // _showToast("Task Added Successfully");
-      // _showToast(context, "Task Added Successfully");
     } else {
       _showErrorDialog(apiResponse.error!.message, context);
     }
@@ -89,8 +95,6 @@ class _TodoListState extends State<TodoList> {
       // Reload tasks after updating a task
       _loadTasks();
       _showSnackBar("Task Updated Successfully");
-      // _showToast("Task Updated Successfully");
-      // _showToast(context, "Task Updated Successfully");
     } else {
       _showErrorDialog(apiResponse.error!.message, context);
     }
@@ -101,8 +105,6 @@ class _TodoListState extends State<TodoList> {
     if (apiResponse.success) {
       _loadTasks();
       _showSnackBar("Task Deleted Successfully");
-      // _showSnackBar("Task Deleted Successfully");
-      // _showToast(context, "Task Deleted Successfully");
     } else {
       _showErrorDialog(apiResponse.error!.message, context);
     }
@@ -126,27 +128,6 @@ class _TodoListState extends State<TodoList> {
     );
   }
 
-  /*void _showToast(String message) {
-    Fluttertoast.showToast(
-      msg: message,
-      toastLength: Toast.LENGTH_SHORT,
-      gravity: ToastGravity.BOTTOM,
-      timeInSecForIosWeb: 1,
-      backgroundColor: Colors.black,
-      textColor: Colors.white,
-      fontSize: 16.0,
-    );
-  }*/
-
-  /*void _showToast(BuildContext context, String message) {
-    Toast.show(
-      message,
-      context,
-      duration: Toast.LENGTH_SHORT,
-      gravity: Toast.BOTTOM,
-    );
-  }*/
-
   void _showSnackBar(String message) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
@@ -156,7 +137,6 @@ class _TodoListState extends State<TodoList> {
     );
   }
 
-  // Future<void> _showAddTaskDialog(BuildContext context) async {
   _showAddTaskDialog(BuildContext context) async {
     TextEditingController titleController = TextEditingController();
     TextEditingController descriptionController = TextEditingController();
@@ -276,6 +256,32 @@ class _TodoListState extends State<TodoList> {
     );
   }
 
+  _showTaskDetailsDialog(Task task) {
+    TaskDetails taskDetails = task.toTaskDetails();
+
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text('Task Details'),
+        content: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text('Title: ${taskDetails.title}'),
+            Text('Description: ${taskDetails.description}'),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context); // Close the dialog
+            },
+            child: Text('Close'),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -292,6 +298,11 @@ class _TodoListState extends State<TodoList> {
             child: ListTile(
               title: Text(task.get('title')),
               subtitle: Text(task.get('description')),
+              onTap: () {
+                _showTaskDetailsDialog(Task(
+                    title: task.get('title'),
+                    description: task.get('description')));
+              },
               trailing: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -319,9 +330,7 @@ class _TodoListState extends State<TodoList> {
         },
         child: Icon(Icons.add),
         elevation: 2.0,
-        // backgroundColor: Colors.blue,
       ),
-      // floatingActionButton:CenterFabButton()
     );
   }
 }
