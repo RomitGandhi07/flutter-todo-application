@@ -241,7 +241,7 @@ packages:
     source: hosted
     version: "2.0.1"
   parse_server_sdk:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: parse_server_sdk
       sha256: "838c5c41a8392dc0009ef975cfe2d75945bd1e88a3f761940b4ffd5bb8a4c339"
