@@ -159,18 +159,28 @@ class _TodoListState extends State<TodoList> {
           ],
         ),
         actions: [
-          TextButton(
+          ElevatedButton(
+            style: ButtonStyle(
+                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(18.0),
+                        side: BorderSide(color: Colors.red)))),
             onPressed: () {
               Navigator.pop(context); // Close the dialog
             },
             child: Text('Cancel'),
           ),
-          TextButton(
+          ElevatedButton(
+            style: ButtonStyle(
+                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(18.0),
+                        side: BorderSide(color: Colors.red)))),
             onPressed: () async {
               await _addTask(titleController.text, descriptionController.text);
               Navigator.pop(context); // Close the dialog
             },
-            child: Text('Add Task'),
+            child: Text('Add'),
           ),
         ],
       ),
@@ -201,19 +211,29 @@ class _TodoListState extends State<TodoList> {
           ],
         ),
         actions: [
-          TextButton(
+          ElevatedButton(
             onPressed: () {
               Navigator.pop(context); // Close the dialog
             },
+            style: ButtonStyle(
+                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(18.0),
+                        side: BorderSide(color: Colors.red)))),
             child: Text('Cancel'),
           ),
-          TextButton(
+          ElevatedButton(
+            style: ButtonStyle(
+                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(18.0),
+                        side: BorderSide(color: Colors.red)))),
             onPressed: () {
               _updateTask(
                   task, titleController.text, descriptionController.text);
               Navigator.pop(context); // Close the dialog
             },
-            child: Text('Update Task'),
+            child: Text('Update'),
           ),
         ],
       ),
@@ -238,17 +258,27 @@ class _TodoListState extends State<TodoList> {
           ],
         ),
         actions: [
-          TextButton(
+          ElevatedButton(
             onPressed: () {
               Navigator.pop(context); // Close the dialog
             },
+            style: ButtonStyle(
+                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(18.0),
+                        side: BorderSide(color: Colors.red)))),
             child: Text('Cancel'),
           ),
-          TextButton(
+          ElevatedButton(
             onPressed: () {
               _deleteTask(task);
               Navigator.pop(context); // Close the dialog
             },
+            style: ButtonStyle(
+                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(18.0),
+                        side: BorderSide(color: Colors.red)))),
             child: Text('Delete'),
           ),
         ],
@@ -271,10 +301,15 @@ class _TodoListState extends State<TodoList> {
           ],
         ),
         actions: [
-          TextButton(
+          ElevatedButton(
             onPressed: () {
               Navigator.pop(context); // Close the dialog
             },
+            style: ButtonStyle(
+                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(18.0),
+                        side: BorderSide(color: Colors.red)))),
             child: Text('Close'),
           ),
         ],
@@ -286,7 +321,7 @@ class _TodoListState extends State<TodoList> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Task List'),
+        title: Text('Tasks'),
       ),
       body: ListView.builder(
         itemCount: tasks.length,
